@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Code Canvas</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      padding: 20px;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    textarea {
+      width: 100%;
+      height: 300px;
+      font-size: 16px;
+      font-family: monospace;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    canvas {
+      display: block;
+      margin-top: 20px;
+      background: white;
+      border: 2px solid black;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h2>Code Canvas – Visual Coding</h2>
+
+  <textarea id="codeInput">
+// Beginner example 👇
+// Draw circles using loop
+
+for (let i = 0; i < 5; i++) {
+  drawCircle(60 + i * 70, 150, 30, "blue");
+}
+  </textarea>
+
+  <br>
+  <button onclick="runCode()">Run Code</button>
+
+  <canvas id="canvas" width="500" height="300"></canvas>
+
+  <script>
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+
+    function clearCanvas() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    function drawCircle(x, y, r, color) {
+      ctx.beginPath();
+      ctx.arc(x, y, r, 0, Math.PI * 2);
+      ctx.fillStyle = color;
+      ctx.fill();
+      ctx.stroke();
+    }
+
+    function runCode() {
+      clearCanvas();
+      const userCode = document.getElementById("codeInput").value;
+      try {
+        new Function("drawCircle", userCode)(drawCircle);
+      } catch (e) {
+        alert("Error: " + e.message);
+      }
+    }
+  </script>
+
+</body>
+</html>
